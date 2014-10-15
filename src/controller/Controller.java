@@ -2,6 +2,7 @@ package controller;
 
 import interpreter.Interpreter;
 import interpreter.command.AnalyticExpression;
+import interpreter.exception.OperatorNotFound;
 import interpreter.exception.ParentExpectedException;
 
 import java.io.*;
@@ -116,6 +117,9 @@ public class Controller {
 			System.out.println("Error while I/O operations");
 			System.exit(-5);
 		} catch (ParentExpectedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (OperatorNotFound e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

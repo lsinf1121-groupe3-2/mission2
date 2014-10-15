@@ -6,6 +6,9 @@ package interpreter;
 import interpreter.command.AnalyticExpression;
 import interpreter.command.Number;
 import interpreter.command.Variable;
+import interpreter.command.binary.BinaryExpression;
+import interpreter.command.binary.SubOperator;
+import interpreter.command.unary.UnaryExpression;
 import interpreter.exception.OperatorNotFound;
 import interpreter.exception.ParentExpectedException;
 
@@ -43,7 +46,7 @@ public class Interpreter {
      * Cette association est maintenue dans la Map commandsMap.
      */
     private void initializeCommands(){
-        //this.commandsMap.put("add", new AddCommand());
+        this.commandsMap.put("-", new SubOperator("-"));
     }
     
     private boolean isOpenningBracket(Character c){
@@ -109,9 +112,9 @@ public class Interpreter {
 	
 	private int operatorRead(Character c, int i) throws OperatorNotFound{
 		int offset = 1;
-		AnalyticExpression operator = commandsMap.get(c);
+		AnalyticExpression operator = commandsMap.get(c.toString());
 		while(i+offset < charSequence.length() && operator == null){
-			String cmd = charSequence.subSequence(i, i+offset).toString();
+			String cmd = charSequence.subSequence(i, i+offset+1).toString();
 			operator = commandsMap.get(cmd);
 			offset++;
 		}
@@ -120,13 +123,23 @@ public class Interpreter {
 			throw new OperatorNotFound();
 		}
 		else {
-			operator.interprete();
+			if(operator instanceof UnaryExpression){
+				
+			}
+			else if (operator instanceof BinaryExpression){
+				this.analyticExpressionsTree.setElement(operator);
+				if(this.analyticExpressionsTree.rightTree() == null)
+					this.analyticExpressionsTree.setRight(new LinkedRBinaryTree<AnalyticExpression>());
+				//TODO: check if there is a left child!
+				this.analyticExpressionsTree = this.analyticExpressionsTree.rightTree();
+			}
 		}
 		return i+offset-1;
 	}
     
     /**
      * @throws ParentExpectedException 
+     * @throws OperatorNotFound 
      * @pre les Map commandsMap et definedConstantsMap sont initialisées. La variable stack l'est également.
      * @post La chaine de caractères commandString est interprétée comme étant une commande du mini langage PostScript.
      * Les token numériques et boolean qu'elle contient sont ajoutés à la pile.
@@ -136,7 +149,7 @@ public class Interpreter {
      * S'il s'agit d'une chaine de caratères qui n'est présente dans aucune des deux map, elle est ajoutée telle quelle à la pile.
      * La valeur retournée est une chaine de caractère contenant les résultats des commandes qui doivent être imprimés dans le fichier le sortie. Cette chaine de caratères peut être vide. Elle peut également contenir les messages détaillés les erreurs rencontrées lors de l'exécution des commandes.
      */
-    public RBinaryTree<AnalyticExpression> interprete(String commandString) throws ParentExpectedException{
+    public RBinaryTree<AnalyticExpression> interprete(String commandString) throws ParentExpectedException, OperatorNotFound{
         charSequence = commandString.subSequence(0, commandString.length());
     	nbrOpenedBrackets = 0;
     	nbrClosedBrackets = 0;
