@@ -1,6 +1,12 @@
 package controller;
 
+import interpreter.Interpreter;
+import interpreter.command.AnalyticExpression;
+import interpreter.exception.ParentExpectedException;
+
 import java.io.*;
+
+import linkedRBinaryTree.RBinaryTree;
 
 /**
  * @author Tanguy
@@ -12,13 +18,14 @@ public class Controller {
     String defaultFile = "resultFile.rmps";
     BufferedReader br;
     BufferedWriter bw;
+    Interpreter interpreter;
 
     /**
      * @pre --
      * @post l'objet est dans un état cohérent et prêt à être utilisé
      */
     public Controller() {
-        
+        this.interpreter = new Interpreter();
     }
     
     /**
@@ -99,7 +106,7 @@ public class Controller {
 		try {
 			while ((commandLigne = br.readLine())!=null){
 				
-				 String result = "TODO";
+				 RBinaryTree<AnalyticExpression> result = interpreter.interprete(commandLigne);
 			        if (result != null && !result.isEmpty()) {
 			            
 			        	bw.write(result+"\n"); //write the result
@@ -108,6 +115,9 @@ public class Controller {
 		} catch (IOException e) {
 			System.out.println("Error while I/O operations");
 			System.exit(-5);
+		} catch (ParentExpectedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
     }
 

@@ -1,0 +1,155 @@
+/**
+ * This package contains the logic needed to interprete an analytic expression and build a binary tree.
+ */
+package interpreter;
+
+import interpreter.command.AnalyticExpression;
+import interpreter.command.Number;
+import interpreter.command.Variable;
+import interpreter.exception.ParentExpectedException;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import sun.awt.image.OffScreenImage;
+import linkedRBinaryTree.LinkedRBinaryTree;
+import linkedRBinaryTree.RBinaryTree;
+
+/**
+ * This class is able to interpret an analytic expression and build a binary tree.
+ * @author Tanguy
+ */
+public class Interpreter {
+    private RBinaryTree<AnalyticExpression> analyticExpressionsTree;
+    private Map<String, AnalyticExpression> commandsMap;
+    private CharSequence charSequence;
+    int nbrOpenedBrackets = 0;
+	int nbrClosedBrackets = 0;
+    
+    /**
+     * Default constructor.
+     * Initialize the tree and the commands map.
+     */
+    public Interpreter(){
+        this.analyticExpressionsTree = new LinkedRBinaryTree<AnalyticExpression>();
+        this.commandsMap = new HashMap<>();
+        this.initializeCommands();
+    }
+    
+    /**
+     * @pre la variable commandsMap est initialisée.
+     * @post les commandes sont instanciées et associées à leur représentation textuelle.
+     * Cette association est maintenue dans la Map commandsMap.
+     */
+    private void initializeCommands(){
+        //this.commandsMap.put("add", new AddCommand());
+    }
+    
+    private boolean isOpenningBracket(Character c){
+    	return c=='(';
+    }
+    
+    private boolean isClosingBracket(Character c){
+    	return c==')';
+    }
+    
+    private boolean isVariable(Character c){
+    	return c=='x';
+    }
+    
+    private boolean isDigit(Character c){
+    	return Character.isDigit(c);
+    }
+    
+    private boolean isOperator(Character c){
+    	return commandsMap.get(c)!=null;
+    }
+    
+    private void openningBracketRead(){
+    	nbrOpenedBrackets++;
+		if(this.analyticExpressionsTree == null)
+			this.analyticExpressionsTree = new LinkedRBinaryTree<AnalyticExpression>();
+		if(this.analyticExpressionsTree.leftTree() == null)
+			this.analyticExpressionsTree.setLeft(new LinkedRBinaryTree<AnalyticExpression>());
+		this.analyticExpressionsTree = this.analyticExpressionsTree.leftTree();
+		this.analyticExpressionsTree.setElement(new Number("0")); //by default set the element to 0; Easier to manager the negatives numbers
+    }
+    
+    private void closingBracketRead() throws ParentExpectedException{
+    	nbrClosedBrackets++;
+		this.analyticExpressionsTree = this.analyticExpressionsTree.parent();
+		if(this.analyticExpressionsTree == null)
+			throw new ParentExpectedException();
+    }
+    
+    private void variableRead() throws ParentExpectedException{
+    	this.analyticExpressionsTree.setElement(new Variable("x"));
+    	this.analyticExpressionsTree = this.analyticExpressionsTree.parent();
+    	if(this.analyticExpressionsTree == null)
+    		throw new ParentExpectedException();
+    }
+    
+	private int digitRead(int i) throws ParentExpectedException{
+		/**
+		 * Read the next value to see if this is a digit too. (ex: 100 must not be read as "1" and "0" and "0")
+		 */
+		int offset = 1;
+		while(i+offset < charSequence.length() && Character.isDigit(charSequence.charAt(i+offset))){
+			offset++;
+		}
+		//the number goes from i to i+offset-1
+		String number = charSequence.subSequence(i, i+offset).toString();
+		this.analyticExpressionsTree.setElement(new Number(number));
+		this.analyticExpressionsTree = this.analyticExpressionsTree.parent();
+    	if(this.analyticExpressionsTree == null)
+    		throw new ParentExpectedException();
+		return i+offset-1;
+    }
+	
+	private int operatorRead(Character c, int i){
+		int offset = 1;
+		AnalyticExpression operator = commandsMap.get(c);
+		//TODO;
+		return i+offset-1;
+	}
+    
+    /**
+     * @throws ParentExpectedException 
+     * @pre les Map commandsMap et definedConstantsMap sont initialisées. La variable stack l'est également.
+     * @post La chaine de caractères commandString est interprétée comme étant une commande du mini langage PostScript.
+     * Les token numériques et boolean qu'elle contient sont ajoutés à la pile.
+     * Les token textuels sont traités de manière différente selon leur nature.
+     * S'il s'agit d'une commande présente dans la Map commandsMap, elle sera exécutée.
+     * S'il s'agit d'une constante présente dans la Map definedConstantsMap, sa valeur associée sera ajoutée dans la pile.
+     * S'il s'agit d'une chaine de caratères qui n'est présente dans aucune des deux map, elle est ajoutée telle quelle à la pile.
+     * La valeur retournée est une chaine de caractère contenant les résultats des commandes qui doivent être imprimés dans le fichier le sortie. Cette chaine de caratères peut être vide. Elle peut également contenir les messages détaillés les erreurs rencontrées lors de l'exécution des commandes.
+     */
+    public RBinaryTree<AnalyticExpression> interprete(String commandString) throws ParentExpectedException{
+        charSequence = commandString.subSequence(0, commandString.length());
+    	nbrOpenedBrackets = 0;
+    	nbrClosedBrackets = 0;
+    	this.analyticExpressionsTree = new LinkedRBinaryTree<AnalyticExpression>(); //we start from a fresh new tree
+        
+        for(int i = 0; i < charSequence.length(); i++){
+        	Character currentChar = charSequence.charAt(i);
+        	if(isOpenningBracket(currentChar)){
+        		openningBracketRead();
+        	}
+        	else if (isClosingBracket(currentChar)) {
+        		closingBracketRead();
+        	}
+        	else if (isVariable(currentChar)){
+        		variableRead();
+        	}
+        	else if (isDigit(currentChar)){
+        		 i = digitRead(i);
+        	}
+        	else {
+        		i = operatorRead(currentChar, i);
+        	}
+        }
+        
+    	return this.analyticExpressionsTree;
+    }
+    
+}
