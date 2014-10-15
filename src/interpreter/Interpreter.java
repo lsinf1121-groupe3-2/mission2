@@ -6,6 +6,7 @@ package interpreter;
 import interpreter.command.AnalyticExpression;
 import interpreter.command.Number;
 import interpreter.command.Variable;
+import interpreter.exception.OperatorNotFound;
 import interpreter.exception.ParentExpectedException;
 
 import java.util.HashMap;
@@ -106,10 +107,21 @@ public class Interpreter {
 		return i+offset-1;
     }
 	
-	private int operatorRead(Character c, int i){
+	private int operatorRead(Character c, int i) throws OperatorNotFound{
 		int offset = 1;
 		AnalyticExpression operator = commandsMap.get(c);
-		//TODO;
+		while(i+offset < charSequence.length() && operator == null){
+			String cmd = charSequence.subSequence(i, i+offset).toString();
+			operator = commandsMap.get(cmd);
+			offset++;
+		}
+		if(operator == null){
+			//can't read operator
+			throw new OperatorNotFound();
+		}
+		else {
+			operator.interprete();
+		}
 		return i+offset-1;
 	}
     
