@@ -107,7 +107,16 @@ public class LinkedRBinaryTree<E> implements RBinaryTree<E>{
     }
     
     public RBinaryTree<E> search(E element){
-    	return null;
+    	RBinaryTree<E> result = null;
+    	if(this.root.element().equals(element))
+    		result = this;
+    	else if (this.leftChild != null){
+    		result = leftChild.search(element);
+    		if (result == null && this.rightChild != null){
+        		result = rightChild.search(element);
+        	}
+    	}
+    	return result;
     }
     
     public RBinaryTree<E> clone(){
