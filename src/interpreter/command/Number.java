@@ -8,12 +8,11 @@ public class Number extends AnalyticExpression{
 
 	public Number(String value) {
 		super(value);
-		
 	}
 
 	@Override
 	public void derivate(RBinaryTree<AnalyticExpression> analyticExpressionsTree) throws UnexpectedOperatorException {
-		if(!(analyticExpressionsTree.root().element() instanceof UnaryDerivate)){
+		if(!(analyticExpressionsTree.root().element() instanceof UnaryDerivate)) {
 			throw new UnexpectedOperatorException();
 		}
 		analyticExpressionsTree.setElement(new Number("0"));

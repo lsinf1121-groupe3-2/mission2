@@ -19,8 +19,6 @@ public class MulOperator extends BinaryExpression {
 
 	@Override
 	public void derivate(RBinaryTree<AnalyticExpression> analyticExpressionsTree) throws UnexpectedOperatorException {
-
-
 		if(!(analyticExpressionsTree.root().element() instanceof UnaryDerivate)){
 			throw new UnexpectedOperatorException();
 		}
@@ -28,29 +26,36 @@ public class MulOperator extends BinaryExpression {
 			throw new UnexpectedOperatorException();
 		}
 		//On enregistre f et g
-		RBinaryTree<AnalyticExpression> left = analyticExpressionsTree.leftTree().leftTree();
-		RBinaryTree<AnalyticExpression> right = analyticExpressionsTree.leftTree().rightTree();
+		RBinaryTree<AnalyticExpression> f = analyticExpressionsTree.leftTree().leftTree();
+		RBinaryTree<AnalyticExpression> g = analyticExpressionsTree.leftTree().rightTree();
 		
 		//On modifie le noeud du dessus
 		analyticExpressionsTree.setElement(new AddOperator());
-		analyticExpressionsTree.setLeft(leftD);
-		analyticExpressionsTree.setRight(rightD);
 		
-		
-		RBinaryTree<AnalyticExpression> leftD = new LinkedRBinaryTree<AnalyticExpression>(analyticExpressionsTree);
+		//sous-sous arbre de gauche
+		RBinaryTree<AnalyticExpression> leftD = new LinkedRBinaryTree<AnalyticExpression>();
 		leftD.setElement(new UnaryDerivate());
-		leftD.setLeft(left);
-		left.setParent(leftD);
+		leftD.setLeft(f);
 		
-		//On construit le sous arbre de droite
-		
-		RBinaryTree<AnalyticExpression> rightD = new LinkedRBinaryTree<AnalyticExpression>(analyticExpressionsTree);
+		//sous-sous arbre de droite
+		RBinaryTree<AnalyticExpression> rightD = new LinkedRBinaryTree<AnalyticExpression>();
 		rightD.setElement(new UnaryDerivate());
-		rightD.setLeft(right);
-		right.setParent(rightD);
+		rightD.setLeft(g);
 		
+		//sous arbre de gauche
+		RBinaryTree<AnalyticExpression> leftMul = new LinkedRBinaryTree<AnalyticExpression>();
+		leftMul.setElement(new MulOperator());
+		leftMul.setLeft(leftD);
+		leftMul.setRight(g.clone());
 		
-
+		//sous arbre de droite
+		RBinaryTree<AnalyticExpression> rightMul = new LinkedRBinaryTree<AnalyticExpression>();
+		rightMul.setElement(new MulOperator());
+		rightMul.setLeft(f.clone());
+		rightMul.setRight(rightD);
+		
+		analyticExpressionsTree.setLeft(leftMul);
+		analyticExpressionsTree.setRight(rightMul);
 	}
 
 }

@@ -1,5 +1,10 @@
 package derivator;
 
+/**
+ * 
+ * @author Jonathan
+ *
+ */
 
 import interpreter.command.AnalyticExpression;
 import interpreter.command.unary.UnaryDerivate;
@@ -10,7 +15,6 @@ import linkedRBinaryTree.RBinaryTree;
 public class Derivator {
 	
 	private RBinaryTree<AnalyticExpression> analyticExpressionsDerivatedTree;
-	private boolean foundUnaryDerivate = true; 
 	
 	public Derivator(){
 		this.analyticExpressionsDerivatedTree = new LinkedRBinaryTree<AnalyticExpression>();
@@ -21,12 +25,13 @@ public class Derivator {
 		if(analyticExpressionBinaryTree == null) 
 			throw new NullPointerException();
 		else
-			initDerivatedTree(analyticExpressionsDerivatedTree, analyticExpressionBinaryTree);
+			initDerivatedTree(analyticExpressionBinaryTree);
 		
-		while(foundUnaryDerivate) {
-			RBinaryTree<AnalyticExpression> searchResult = analyticExpressionsDerivatedTree.search(new UnaryDerivate());
-			if(searchResult == null)
-				foundUnaryDerivate = false;
+		RBinaryTree<AnalyticExpression> searchResult;
+		while((searchResult = analyticExpressionsDerivatedTree.search(new UnaryDerivate())) != null) {
+			if(searchResult.leftTree() == null){
+				throw new NullPointerException("left tree expected but null found at" + searchResult.toString());
+			}
 			else
 				searchResult.leftTree().root().element().derivate(searchResult);
 		}
@@ -34,10 +39,11 @@ public class Derivator {
 		return analyticExpressionsDerivatedTree;
 	}
 	
-	private void initDerivatedTree(RBinaryTree<AnalyticExpression> TreeDerivated, RBinaryTree<AnalyticExpression> Tree) {
+	private void initDerivatedTree(RBinaryTree<AnalyticExpression> tree) {
+		this.analyticExpressionsDerivatedTree = new LinkedRBinaryTree<AnalyticExpression>();
 		UnaryDerivate derivate = new UnaryDerivate();
-		TreeDerivated.setElement(derivate);
-		TreeDerivated.setLeft(Tree);
+		analyticExpressionsDerivatedTree.setElement(derivate);
+		analyticExpressionsDerivatedTree.setLeft(tree);
 	}
 	
 	

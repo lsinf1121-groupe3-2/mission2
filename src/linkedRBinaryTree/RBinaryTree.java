@@ -82,4 +82,8 @@ public interface RBinaryTree<E> extends Cloneable{
   public void setParent(RBinaryTree<E> parent);
   
   public RBinaryTree<E> search(E element);
+  
+  public LinkedRBinaryTree<E> clone();
+  
+  public String toString();
 }

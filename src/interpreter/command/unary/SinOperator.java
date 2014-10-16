@@ -23,26 +23,26 @@ public class SinOperator extends UnaryExpression {
 		if(!(analyticExpressionsTree.root().element() instanceof UnaryDerivate)){
 			throw new UnexpectedOperatorException();
 		}
-		if(!(analyticExpressionsTree.leftTree().root().element() instanceof CosOperator))
+		if(!(analyticExpressionsTree.leftTree().root().element() instanceof SinOperator))
 		{
 			throw new UnexpectedOperatorException();
 		}
 
 		RBinaryTree<AnalyticExpression> f = analyticExpressionsTree.leftTree().leftTree();
 		analyticExpressionsTree.setElement(new MulOperator());
-		RBinaryTree<AnalyticExpression> LeftD = new LinkedRBinaryTree(analyticExpressionsTree);
-		LeftD.setElement(new UnaryDerivate());
-		analyticExpressionsTree.setLeft(LeftD);
+		RBinaryTree<AnalyticExpression> d = new LinkedRBinaryTree();
+		d.setElement(new UnaryDerivate());
+		analyticExpressionsTree.setLeft(d);
 		
-		RBinaryTree<AnalyticExpression> RightD = new LinkedRBinaryTree(analyticExpressionsTree);
-		RightD.setElement(new CosOperator());
-		analyticExpressionsTree.setRight(RightD);
+		RBinaryTree<AnalyticExpression> cos = new LinkedRBinaryTree();
+		cos.setElement(new CosOperator());
+		analyticExpressionsTree.setRight(cos);
 		
-		RBinaryTree<AnalyticExpression> LeftF = new LinkedRBinaryTree(LeftD);
-		LeftF.setElement(f.root().element());
+		RBinaryTree<AnalyticExpression> LeftF = f.clone();
+		d.setLeft(LeftF);
 		
-		RBinaryTree<AnalyticExpression> RightF = new LinkedRBinaryTree(RightD);
-		RightF.setElement(f.root().element());		
+		RBinaryTree<AnalyticExpression> RightF = f.clone();
+		cos.setLeft(RightF);		
 		
 	}
 

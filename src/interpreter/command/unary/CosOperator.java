@@ -1,6 +1,7 @@
 package interpreter.command.unary;
 
 import interpreter.command.AnalyticExpression;
+import interpreter.command.Number;
 import interpreter.command.binary.MulOperator;
 import interpreter.command.unary.UnaryDerivate;
 import interpreter.exception.UnexpectedOperatorException;
@@ -31,29 +32,28 @@ public class CosOperator extends UnaryExpression {
 			}
 			
 			RBinaryTree<AnalyticExpression> f = analyticExpressionsTree.leftTree().leftTree();
+			
+			//analyticExpressionsTree = MulLeft = -1 * (mulRight)
 			analyticExpressionsTree.setElement(new MulOperator());
-			RBinaryTree<AnalyticExpression> LeftD = new LinkedRBinaryTree(analyticExpressionsTree);
-			LeftD.setElement(new UnaryDerivate());
-			analyticExpressionsTree.setLeft(LeftD);
+			RBinaryTree<AnalyticExpression> sub1 = new LinkedRBinaryTree<AnalyticExpression>();
+			sub1.setElement(new Number("-1"));
+
 			
-			RBinaryTree<AnalyticExpression> RightD = new LinkedRBinaryTree(analyticExpressionsTree);
-			RightD.setElement(new SinOperator());
-			analyticExpressionsTree.setRight(RightD);
+			//MulRight = D(f) * sin(f)
+			RBinaryTree<AnalyticExpression> mulRight = new LinkedRBinaryTree<AnalyticExpression>();
+			mulRight.setElement(new MulOperator());
+			RBinaryTree<AnalyticExpression> leftD = new LinkedRBinaryTree<AnalyticExpression>();
+			leftD.setElement(new UnaryDerivate());
+			leftD.setLeft(f.clone());
+			RBinaryTree<AnalyticExpression> sin = new LinkedRBinaryTree<AnalyticExpression>();
+			sin.setElement(new SinOperator());
+			sin.setLeft(f.clone());
 			
-			RBinaryTree<AnalyticExpression> LeftF = new LinkedRBinaryTree(LeftD);
-			LeftF.setElement(f.root().element());
-			
-			RBinaryTree<AnalyticExpression> RightF = new LinkedRBinaryTree(RightD);
-			RightF.setElement(f.root().element());
-			
-			RBinaryTree<AnalyticExpression> Top = new LinkedRBinaryTree();
-			Top.setRight(analyticExpressionsTree);
-			analyticExpressionsTree.setParent(Top);
-			analyticExpressionsTree=analyticExpressionsTree.parent();
-			analyticExpressionsTree.setElement(new MulOperator());
-			RBinaryTree<AnalyticExpression> Minus1 = new LinkedRBinaryTree(analyticExpressionsTree);
-			Minus1.setElement(new Number("-1"));
-			
+			analyticExpressionsTree.setLeft(sub1);
+			analyticExpressionsTree.setRight(mulRight);
+			mulRight.setLeft(leftD);
+			mulRight.setRight(sin);
+
 		}
 	}
 
