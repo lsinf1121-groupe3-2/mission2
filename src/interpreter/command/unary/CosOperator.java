@@ -23,8 +23,10 @@ public class CosOperator extends UnaryExpression {
 			if(!(analyticExpressionsTree.root().element() instanceof UnaryDerivate)){
 				throw new UnexpectedOperatorException();
 			}
-			
-
+			if(!(analyticExpressionsTree.leftTree().root().element() instanceof CosOperator))
+			{
+				throw new UnexpectedOperatorException();
+			}
 		}
 	}
 
