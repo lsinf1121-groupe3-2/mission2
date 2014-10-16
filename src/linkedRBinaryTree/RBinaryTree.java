@@ -5,7 +5,7 @@ package linkedRBinaryTree;
  *
  * This interface uses the Position interface described in DSAJ-4.  
  */
-public interface RBinaryTree<E> {
+public interface RBinaryTree<E> extends Cloneable{
   /**
    * @pre -
    * @post return true if this is empty, false otherwise.
@@ -80,4 +80,6 @@ public interface RBinaryTree<E> {
    * @post parent is the parent of this. this is not defined as parent's child /!\
    */
   public void setParent(RBinaryTree<E> parent);
+  
+  public RBinaryTree<E> search(E element);
 }
