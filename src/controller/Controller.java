@@ -126,6 +126,7 @@ public class Controller {
 					bw.write("Unknow operator in " + commandLigne+"\n");
 				} catch (NullPointerException e) {
 					bw.write("No analytic expression binary tree found"+"\n");
+					e.printStackTrace();
 				}
 				
 			}

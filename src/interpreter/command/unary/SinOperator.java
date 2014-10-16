@@ -23,7 +23,7 @@ public class SinOperator extends UnaryExpression {
 		if(!(analyticExpressionsTree.root().element() instanceof UnaryDerivate)){
 			throw new UnexpectedOperatorException();
 		}
-		if(!(analyticExpressionsTree.leftTree().root().element() instanceof CosOperator))
+		if(!(analyticExpressionsTree.leftTree().root().element() instanceof SinOperator))
 		{
 			throw new UnexpectedOperatorException();
 		}

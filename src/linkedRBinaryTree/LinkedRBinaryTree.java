@@ -122,8 +122,10 @@ public class LinkedRBinaryTree<E> implements RBinaryTree<E>, Cloneable  {
 	    }
 	    
 	    linkedRBinaryTree.root = (Position<E>) root.clone();
-	    linkedRBinaryTree.leftChild = (RBinaryTree<E>) leftChild.clone();
-	    linkedRBinaryTree.rightChild = (RBinaryTree<E>) rightChild.clone();
+	    if(leftChild!=null)
+	    	linkedRBinaryTree.leftChild = (RBinaryTree<E>) leftChild.clone();
+	    if(rightChild!=null)
+	    	linkedRBinaryTree.rightChild = (RBinaryTree<E>) rightChild.clone();
 	    //linkedRBinaryTree.parent = (RBinaryTree<E>) parent.clone();
 	    
 	    // on renvoie le clone
