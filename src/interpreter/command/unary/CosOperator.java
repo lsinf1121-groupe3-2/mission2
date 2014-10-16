@@ -1,22 +1,24 @@
-package interpreter.command.binary;
+package interpreter.command.unary;
 
 import interpreter.command.AnalyticExpression;
 import linkedRBinaryTree.RBinaryTree;
 
-public class SubOperator extends BinaryExpression{
+public class CosOperator extends UnaryExpression {
 
-	public SubOperator(String value) {
+	public CosOperator(String value) {
 		super(value);
+		// TODO Auto-generated constructor stub
 	}
 	
-	public SubOperator() {
-		this("-");
+	public CosOperator() {
+		this("cos");
+		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public void derivate(RBinaryTree<AnalyticExpression> analyticExpressionsTree) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

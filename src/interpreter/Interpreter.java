@@ -6,8 +6,14 @@ package interpreter;
 import interpreter.command.AnalyticExpression;
 import interpreter.command.Number;
 import interpreter.command.Variable;
+import interpreter.command.binary.AddOperator;
 import interpreter.command.binary.BinaryExpression;
+import interpreter.command.binary.DivOperator;
+import interpreter.command.binary.ExpOperator;
+import interpreter.command.binary.MulOperator;
 import interpreter.command.binary.SubOperator;
+import interpreter.command.unary.CosOperator;
+import interpreter.command.unary.SinOperator;
 import interpreter.command.unary.UnaryExpression;
 import interpreter.exception.OperatorNotFoundException;
 import interpreter.exception.ParentExpectedException;
@@ -47,7 +53,13 @@ public class Interpreter {
      * Cette association est maintenue dans la Map commandsMap.
      */
     private void initializeCommands(){
-        this.commandsMap.put("-", new SubOperator("-"));
+        this.commandsMap.put("-", new SubOperator());
+        this.commandsMap.put("/", new DivOperator());
+        this.commandsMap.put("cos", new CosOperator());
+        this.commandsMap.put("+", new AddOperator());
+        this.commandsMap.put("*", new MulOperator());
+        this.commandsMap.put("sin", new SinOperator());
+        this.commandsMap.put("^", new ExpOperator());
     }
     
     private boolean isOpenningBracket(Character c){
@@ -117,6 +129,7 @@ public class Interpreter {
 	private int operatorRead(Character c, int i) throws OperatorNotFoundException, UnknowOperatorException{
 		int offset = 1;
 		AnalyticExpression operator = commandsMap.get(c.toString());
+		//search for operator like 'sin' or 'cos' (more than 1 char)
 		while(i+offset < charSequence.length() && operator == null){
 			String cmd = charSequence.subSequence(i, i+offset+1).toString();
 			operator = commandsMap.get(cmd);
@@ -129,15 +142,20 @@ public class Interpreter {
 		else {
 			if(operator instanceof UnaryExpression){
 				this.analyticExpressionsTree.setElement(operator);
-				if(this.analyticExpressionsTree.leftTree() == null)
-					this.analyticExpressionsTree.setLeft(new LinkedRBinaryTree<AnalyticExpression>());
-				this.analyticExpressionsTree = this.analyticExpressionsTree.leftTree();
+//				if(this.analyticExpressionsTree.leftTree() == null)
+//					this.analyticExpressionsTree.setLeft(new LinkedRBinaryTree<AnalyticExpression>());
+//				this.analyticExpressionsTree = this.analyticExpressionsTree.leftTree();
 			}
 			else if (operator instanceof BinaryExpression){
+				//TODO: check if there is a left child!
+//				if(this.analyticExpressionsTree.leftTree() == null){
+//					this.analyticExpressionsTree = this.analyticExpressionsTree.parent();
+//				}
+				
 				this.analyticExpressionsTree.setElement(operator);
 				if(this.analyticExpressionsTree.rightTree() == null)
 					this.analyticExpressionsTree.setRight(new LinkedRBinaryTree<AnalyticExpression>());
-				//TODO: check if there is a left child!
+				
 				this.analyticExpressionsTree = this.analyticExpressionsTree.rightTree();
 			}
 			else{
@@ -152,14 +170,6 @@ public class Interpreter {
      * @throws ParentExpectedException 
      * @throws OperatorNotFoundException 
      * @throws UnknowOperatorException 
-     * @pre les Map commandsMap et definedConstantsMap sont initialisées. La variable stack l'est également.
-     * @post La chaine de caractères commandString est interprétée comme étant une commande du mini langage PostScript.
-     * Les token numériques et boolean qu'elle contient sont ajoutés à la pile.
-     * Les token textuels sont traités de manière différente selon leur nature.
-     * S'il s'agit d'une commande présente dans la Map commandsMap, elle sera exécutée.
-     * S'il s'agit d'une constante présente dans la Map definedConstantsMap, sa valeur associée sera ajoutée dans la pile.
-     * S'il s'agit d'une chaine de caratères qui n'est présente dans aucune des deux map, elle est ajoutée telle quelle à la pile.
-     * La valeur retournée est une chaine de caractère contenant les résultats des commandes qui doivent être imprimés dans le fichier le sortie. Cette chaine de caratères peut être vide. Elle peut également contenir les messages détaillés les erreurs rencontrées lors de l'exécution des commandes.
      */
     public RBinaryTree<AnalyticExpression> interprete(String commandString) throws ParentExpectedException, OperatorNotFoundException, UnknowOperatorException{
         charSequence = commandString.subSequence(0, commandString.length());
@@ -185,7 +195,11 @@ public class Interpreter {
         		i = operatorRead(currentChar, i);
         	}
         }
-        
+        if(this.analyticExpressionsTree.root() == null && this.analyticExpressionsTree.leftTree() != null){
+        	//we add too much parent
+        	this.analyticExpressionsTree = this.analyticExpressionsTree.leftTree();
+        	this.analyticExpressionsTree.setParent(null);
+        }
     	return this.analyticExpressionsTree;
     }
     

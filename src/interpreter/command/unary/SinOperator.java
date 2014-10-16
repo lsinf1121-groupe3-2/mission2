@@ -1,22 +1,23 @@
-package interpreter.command.binary;
+package interpreter.command.unary;
 
 import interpreter.command.AnalyticExpression;
 import linkedRBinaryTree.RBinaryTree;
 
-public class SubOperator extends BinaryExpression{
+public class SinOperator extends UnaryExpression {
 
-	public SubOperator(String value) {
+	public SinOperator(String value) {
 		super(value);
+		// TODO Auto-generated constructor stub
 	}
 	
-	public SubOperator() {
-		this("-");
+	public SinOperator() {
+		this("sin");
 	}
 
 	@Override
 	public void derivate(RBinaryTree<AnalyticExpression> analyticExpressionsTree) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

@@ -3,14 +3,14 @@ package interpreter.command.binary;
 import interpreter.command.AnalyticExpression;
 import linkedRBinaryTree.RBinaryTree;
 
-public class SubOperator extends BinaryExpression{
+public class DivOperator extends BinaryExpression{
 
-	public SubOperator(String value) {
+	public DivOperator(String value) {
 		super(value);
 	}
 	
-	public SubOperator() {
-		this("-");
+	public DivOperator() {
+		this("/");
 	}
 
 	@Override

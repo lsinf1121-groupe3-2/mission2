@@ -3,7 +3,7 @@
 cos(x)
 ((10/x)+(2*x))
 (x*(1-sin(x)))
-((x^4)+sin((x+(2/x))))
+(x^4+sin((x+(2/x)))) #pas entièrement parenthésées! Should be ((x^4)+sin((x+(2/x))))
 ((x^(-1))/6)
 ((x*(sin(((x/10)+x))^3))-cos(x))
 (x+)3+x))
