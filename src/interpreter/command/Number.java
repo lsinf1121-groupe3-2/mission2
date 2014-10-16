@@ -11,8 +11,12 @@ public class Number extends AnalyticExpression{
 
 	@Override
 	public void derivate(RBinaryTree<AnalyticExpression> analyticExpressionsTree) {
-		
-		
+		if(analyticExpressionsTree.root().element().getValue()!="D"){
+			throw new DerivateOperatorExpectedException();
+		}
+		analyticExpressionsTree.setElement(new Number("0"));
+		analyticExpressionsTree.setLeft(null);
+		analyticExpressionsTree.setRight(null);
 	}
 
 }
