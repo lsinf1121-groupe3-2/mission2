@@ -4,6 +4,9 @@ import interpreter.command.unary.UnaryDerivate;
 import interpreter.exception.UnexpectedOperatorException;
 import linkedRBinaryTree.RBinaryTree;
 
+/**
+ * @author Tanguy
+ */
 public class Variable extends AnalyticExpression{
 
 	public Variable(String value) {

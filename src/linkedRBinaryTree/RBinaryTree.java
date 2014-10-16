@@ -4,6 +4,8 @@ package linkedRBinaryTree;
  * Interface for a Binary Tree defined recursively.
  *
  * This interface uses the Position interface described in DSAJ-4.  
+ *
+ * @author Tanguy
  */
 public interface RBinaryTree<E> extends Cloneable{
   /**
@@ -81,9 +83,21 @@ public interface RBinaryTree<E> extends Cloneable{
    */
   public void setParent(RBinaryTree<E> parent);
   
+  /**
+   * @pre this is not empty.
+   * @post return a reference to the first subtree which element's matching element.
+   */
   public RBinaryTree<E> search(E element);
   
+  /**
+   * @pre this is not empty.
+   * @post return a full clone of this.
+   */
   public LinkedRBinaryTree<E> clone();
   
+  /**
+   * @pre this is not empty.
+   * @post return a string representation of this.
+   */
   public String toString();
 }

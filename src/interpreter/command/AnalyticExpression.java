@@ -4,9 +4,7 @@ import interpreter.exception.UnexpectedOperatorException;
 import linkedRBinaryTree.RBinaryTree;
 
 /**
- * 
  * @author Tanguy
- *
  */
 public abstract class AnalyticExpression {
 	protected String value;

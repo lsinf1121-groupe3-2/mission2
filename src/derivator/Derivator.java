@@ -1,9 +1,7 @@
 package derivator;
 
 /**
- * 
- * @author Jonathan
- *
+ * @author Jonathan & Tanguy
  */
 
 import interpreter.command.AnalyticExpression;

@@ -1,7 +1,6 @@
 package linkedRBinaryTree;
 
 /**
- *
  * @author Tanguy
  */
 public class Node<E> implements Position<E>, Cloneable {

@@ -2,6 +2,9 @@ package linkedRBinaryTree;
 
 import java.util.ArrayList;
 
+/**
+ * @author Tanguy
+ */
 public class LinkedRBinaryTree<E> implements RBinaryTree<E>, Cloneable  {
     private Position<E> root;
     private RBinaryTree<E> leftChild;

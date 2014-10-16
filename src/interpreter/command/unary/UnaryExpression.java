@@ -5,9 +5,7 @@ import interpreter.command.AnalyticExpression;
 import interpreter.exception.UnexpectedOperatorException;
 
 /**
- * 
  * @author Tanguy
- *
  */
 public abstract class UnaryExpression extends AnalyticExpression{
 
