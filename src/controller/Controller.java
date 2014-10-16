@@ -30,6 +30,7 @@ public class Controller {
      */
     public Controller() {
         this.interpreter = new Interpreter();
+        this.derivator = new Derivator();
     }
     
     /**
