@@ -2,8 +2,9 @@ package controller;
 
 import interpreter.Interpreter;
 import interpreter.command.AnalyticExpression;
-import interpreter.exception.OperatorNotFound;
+import interpreter.exception.OperatorNotFoundException;
 import interpreter.exception.ParentExpectedException;
+import interpreter.exception.UnknowOperatorException;
 
 import java.io.*;
 
@@ -119,7 +120,10 @@ public class Controller {
 		} catch (ParentExpectedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (OperatorNotFound e) {
+		} catch (OperatorNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (UnknowOperatorException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
