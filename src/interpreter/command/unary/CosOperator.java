@@ -1,6 +1,8 @@
 package interpreter.command.unary;
 
 import interpreter.command.AnalyticExpression;
+import interpreter.command.unary.UnaryDerivate;
+import interpreter.exception.UnexpectedOperatorException;
 import linkedRBinaryTree.RBinaryTree;
 
 public class CosOperator extends UnaryExpression {
@@ -16,9 +18,14 @@ public class CosOperator extends UnaryExpression {
 	}
 
 	@Override
-	public void derivate(RBinaryTree<AnalyticExpression> analyticExpressionsTree) {
-		// TODO Auto-generated method stub
+	public void derivate(RBinaryTree<AnalyticExpression> analyticExpressionsTree) throws UnexpectedOperatorException {
+		 {
+			if(!(analyticExpressionsTree.root().element() instanceof UnaryDerivate)){
+				throw new UnexpectedOperatorException();
+			}
+			
 
+		}
 	}
 
 }
