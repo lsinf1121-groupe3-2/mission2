@@ -2,6 +2,7 @@ package interpreter.command.binary;
 
 import linkedRBinaryTree.RBinaryTree;
 import interpreter.command.AnalyticExpression;
+import interpreter.exception.UnexpectedOperatorException;
 
 /**
  * 
@@ -15,6 +16,6 @@ public abstract class BinaryExpression extends AnalyticExpression{
 		
 	}
 	
-	public abstract void derivate(RBinaryTree<AnalyticExpression> analyticExpressionsTree);
+	public abstract void derivate(RBinaryTree<AnalyticExpression> analyticExpressionsTree) throws UnexpectedOperatorException;
 
 }

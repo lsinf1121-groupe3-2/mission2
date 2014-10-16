@@ -1,6 +1,7 @@
 package interpreter.command.binary;
 
 import interpreter.command.AnalyticExpression;
+import interpreter.exception.UnexpectedOperatorException;
 import linkedRBinaryTree.RBinaryTree;
 
 public class AddOperator extends BinaryExpression {
@@ -15,8 +16,11 @@ public class AddOperator extends BinaryExpression {
 	}
 
 	@Override
-	public void derivate(RBinaryTree<AnalyticExpression> analyticExpressionsTree) {
-		// TODO Auto-generated method stub
+	public void derivate(RBinaryTree<AnalyticExpression> analyticExpressionsTree) throws UnexpectedOperatorException {
+		if(!(analyticExpressionsTree.root().element() instanceof UnaryDerivate)){
+			throw new UnexpectedOperatorException();
+		}
+		
 
 	}
 

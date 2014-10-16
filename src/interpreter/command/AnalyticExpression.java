@@ -1,5 +1,6 @@
 package interpreter.command;
 
+import interpreter.exception.UnexpectedOperatorException;
 import linkedRBinaryTree.RBinaryTree;
 
 /**
@@ -14,7 +15,7 @@ public abstract class AnalyticExpression {
 		this.value = value;
 	}
 	
-	public abstract void derivate(RBinaryTree<AnalyticExpression> analyticExpressionsTree);
+	public abstract void derivate(RBinaryTree<AnalyticExpression> analyticExpressionsTree) throws UnexpectedOperatorException;
 	
 	public String getValue() {
 		return value;
