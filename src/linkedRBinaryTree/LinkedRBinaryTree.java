@@ -2,7 +2,7 @@ package linkedRBinaryTree;
 
 import java.util.ArrayList;
 
-public class LinkedRBinaryTree<E> implements RBinaryTree<E>{
+public class LinkedRBinaryTree<E> implements RBinaryTree<E>, Cloneable{
     private Position<E> root;
     private RBinaryTree<E> leftChild;
     private RBinaryTree<E> rightChild;
@@ -104,6 +104,10 @@ public class LinkedRBinaryTree<E> implements RBinaryTree<E>{
     @Override
     public void setParent(RBinaryTree<E> parent) {
         this.parent = parent;
+    }
+    
+    public RBinaryTree<E> search(E element){
+    	return null;
     }
 }
 
