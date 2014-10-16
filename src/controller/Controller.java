@@ -122,7 +122,10 @@ public class Controller {
 					bw.write("Operator not found in " + commandLigne);
 				} catch (UnknowOperatorException e) {
 					bw.write("Unknow operator in " + commandLigne);
+				} catch (NullPointerException e) {
+					bw.write("No analytic expression Ninary tree found");
 				}
+				
 			}
 		} catch (IOException e) {
 			System.out.println("Error while I/O operations");
