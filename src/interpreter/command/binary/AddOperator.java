@@ -27,17 +27,15 @@ public class AddOperator extends BinaryExpression {
 		}
 		//On construit le sous arbre de gauche
 		RBinaryTree<AnalyticExpression> left = analyticExpressionsTree.leftTree().leftTree();
-		RBinaryTree<AnalyticExpression> leftD = new LinkedRBinaryTree<AnalyticExpression>(analyticExpressionsTree);
+		RBinaryTree<AnalyticExpression> leftD = new LinkedRBinaryTree<AnalyticExpression>();
 		leftD.setElement(new UnaryDerivate());
 		leftD.setLeft(left);
-		left.setParent(leftD);
 		
 		//On construit le sous arbre de droite
 		RBinaryTree<AnalyticExpression> right = analyticExpressionsTree.leftTree().rightTree();
-		RBinaryTree<AnalyticExpression> rightD = new LinkedRBinaryTree<AnalyticExpression>(analyticExpressionsTree);
+		RBinaryTree<AnalyticExpression> rightD = new LinkedRBinaryTree<AnalyticExpression>();
 		rightD.setElement(new UnaryDerivate());
 		rightD.setLeft(right);
-		right.setParent(rightD);
 		
 		analyticExpressionsTree.setElement(new AddOperator());
 		analyticExpressionsTree.setLeft(leftD);

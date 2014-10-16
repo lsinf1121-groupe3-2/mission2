@@ -14,13 +14,6 @@ public class LinkedRBinaryTree<E> implements RBinaryTree<E>, Cloneable  {
         this.rightChild = null;
         this.parent = null;
     }
-    
-    public LinkedRBinaryTree(RBinaryTree<E> parent){
-        this.root = null;
-        this.leftChild = null;
-        this.rightChild = null;
-        this.parent = parent;
-    }
 
     @Override
     public boolean isEmpty(){
@@ -131,12 +124,24 @@ public class LinkedRBinaryTree<E> implements RBinaryTree<E>, Cloneable  {
 	    linkedRBinaryTree.root = (Position<E>) root.clone();
 	    linkedRBinaryTree.leftChild = (RBinaryTree<E>) leftChild.clone();
 	    linkedRBinaryTree.rightChild = (RBinaryTree<E>) rightChild.clone();
-	    linkedRBinaryTree.parent = (RBinaryTree<E>) parent.clone();
+	    //linkedRBinaryTree.parent = (RBinaryTree<E>) parent.clone();
 	    
 	    // on renvoie le clone
 	    return linkedRBinaryTree;
 	}
 
+	public String toString(){
+		if(this.leftChild != null && this.rightChild != null){
+			return "(" + this.leftChild.toString() + this.root.element().toString() + this.rightChild.toString() + ")";
+		}
+		else if (this.leftChild != null){
+			return this.root.element().toString() + "(" + this.leftChild.toString() + ")";
+		}
+		else {
+			return this.root.element().toString();
+		}
+	}
+	
 }
 
 
