@@ -2,7 +2,7 @@ package linkedRBinaryTree;
 
 import java.util.ArrayList;
 
-public class LinkedRBinaryTree<E> implements RBinaryTree<E>{
+public class LinkedRBinaryTree<E> implements RBinaryTree<E>, Cloneable  {
     private Position<E> root;
     private RBinaryTree<E> leftChild;
     private RBinaryTree<E> rightChild;
@@ -119,16 +119,24 @@ public class LinkedRBinaryTree<E> implements RBinaryTree<E>{
     	return result;
     }
     
-    public RBinaryTree<E> clone(){
-    	 
-	    LinkedRBinaryTree linkedRBinaryTree = (LinkedRBinaryTree) super.clone();
+
+	public LinkedRBinaryTree<E> clone(){
+    	LinkedRBinaryTree<E> linkedRBinaryTree = null;
+	    try {
+	    	linkedRBinaryTree = (LinkedRBinaryTree<E>) super.clone();
+	    } catch(CloneNotSupportedException e) {
+	      	e.printStackTrace(System.err);
+	    }
 	    
-	    // On clone l'attribut de type Jouet qui n'est pas immuable.
-	    enfant.jouetPrefere = (Jouet) jouetPrefere.clone();
+	    linkedRBinaryTree.root = (Position<E>) root.clone();
+	    linkedRBinaryTree.leftChild = (RBinaryTree<E>) leftChild.clone();
+	    linkedRBinaryTree.rightChild = (RBinaryTree<E>) rightChild.clone();
+	    linkedRBinaryTree.parent = (RBinaryTree<E>) parent.clone();
 	    
 	    // on renvoie le clone
-	    return enfant;
-    }
+	    return linkedRBinaryTree;
+	}
+
 }
 
 
