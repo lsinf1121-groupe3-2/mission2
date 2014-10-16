@@ -4,6 +4,7 @@ import interpreter.Interpreter;
 import interpreter.command.AnalyticExpression;
 import interpreter.exception.OperatorNotFoundException;
 import interpreter.exception.ParentExpectedException;
+import interpreter.exception.UnexpectedOperatorException;
 import interpreter.exception.UnknowOperatorException;
 
 import java.io.*;
@@ -101,12 +102,13 @@ public class Controller {
     }
     
     /**
+     * @throws UnexpectedOperatorException 
      * @pre Les variables bw et br sont initialisées.
      * @post Le fichier d'entrée à été entièrement lu et interprété.
      * Le résultat à été ecrit dans le fichier de sortie.
      * Le programme se termine avec le code d'erreur -5 si une erreur de lecture ou d'écriture survient pendant l'exécution.
      */
-    private void interpreteFile(){
+    private void interpreteFile() throws UnexpectedOperatorException{
     	String commandLigne;
 		try {
 			while ((commandLigne = br.readLine())!=null){
@@ -134,12 +136,13 @@ public class Controller {
     }
 
     /**
+     * @throws UnexpectedOperatorException 
      * @pre --
      * @post La logique métier permettant de lire le fichier d'entrée contenant les commandes PostScript a été exécutée.
      * Le résultat a été écrit dans le fichier de sortie.
      * Les fichiers ont été fermés correctement.
      */
-    public void start(String[] args) {
+    public void start(String[] args) throws UnexpectedOperatorException {
     	this.parseArgs(args);
     	this.initializeReader();
     	this.initializeWriter();
@@ -149,8 +152,9 @@ public class Controller {
 
     /**
      * @param args the command line arguments
+     * @throws UnexpectedOperatorException 
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws UnexpectedOperatorException {
         Controller applicationController = new Controller();
         applicationController.start(args);
     }
