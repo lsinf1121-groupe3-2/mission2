@@ -37,7 +37,7 @@ public class CosOperator extends UnaryExpression {
 			analyticExpressionsTree.setLeft(LeftD);
 			
 			RBinaryTree<AnalyticExpression> RightD = new LinkedRBinaryTree(analyticExpressionsTree);
-			RightD.setElement(new CosOperator());
+			RightD.setElement(new SinOperator());
 			analyticExpressionsTree.setRight(RightD);
 			
 			RBinaryTree<AnalyticExpression> LeftF = new LinkedRBinaryTree(LeftD);
@@ -45,6 +45,15 @@ public class CosOperator extends UnaryExpression {
 			
 			RBinaryTree<AnalyticExpression> RightF = new LinkedRBinaryTree(RightD);
 			RightF.setElement(f.root().element());
+			
+			RBinaryTree<AnalyticExpression> Top = new LinkedRBinaryTree();
+			Top.setRight(analyticExpressionsTree);
+			analyticExpressionsTree.setParent(Top);
+			analyticExpressionsTree=analyticExpressionsTree.parent();
+			analyticExpressionsTree.setElement(new MulOperator());
+			RBinaryTree<AnalyticExpression> Minus1 = new LinkedRBinaryTree(analyticExpressionsTree);
+			Minus1.setElement(new Number("-1"));
+			
 		}
 	}
 
