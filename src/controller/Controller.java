@@ -108,11 +108,12 @@ public class Controller {
 		try {
 			while ((commandLigne = br.readLine())!=null){
 				
-				 RBinaryTree<AnalyticExpression> result = interpreter.interprete(commandLigne);
-			        if (result != null && !result.isEmpty()) {
-			            
-			        	bw.write(result+"\n"); //write the result
-			        }
+				 RBinaryTree<AnalyticExpression> analyticExpressionBinaryTree = interpreter.interprete(commandLigne);
+	//TODO ICI	 derivator.derivate(analyticExpressionBinaryTree);
+//			        if (result != null && !result.isEmpty()) {
+//			            
+//			        	bw.write(result+"\n"); //write the result
+//			        }
 			}
 		} catch (IOException e) {
 			System.out.println("Error while I/O operations");
