@@ -10,7 +10,7 @@ public class Number extends AnalyticExpression{
 	}
 
 	@Override
-	public void derivate(RBinaryTree<AnalyticExpression> analyticExpressionsTree) {
+	public void derivate(RBinaryTree<AnalyticExpression> analyticExpressionsTree) throw DerivateOperatorExpectedException {
 		if(analyticExpressionsTree.root().element().getValue()!="D"){
 			throw new DerivateOperatorExpectedException();
 		}
