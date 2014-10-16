@@ -19,7 +19,7 @@ public class Controller {
 
     String commandFile;
     String outputFile;
-    String defaultFile = "resultFile.rmps";
+    String defaultFile = "resultFile.txt";
     BufferedReader br;
     BufferedWriter bw;
     Interpreter interpreter;
