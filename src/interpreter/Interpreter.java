@@ -22,7 +22,6 @@ import interpreter.exception.UnknowOperatorException;
 import java.util.HashMap;
 import java.util.Map;
 
-import sun.awt.image.OffScreenImage;
 import linkedRBinaryTree.LinkedRBinaryTree;
 import linkedRBinaryTree.RBinaryTree;
 
@@ -147,10 +146,14 @@ public class Interpreter {
 //				this.analyticExpressionsTree = this.analyticExpressionsTree.leftTree();
 			}
 			else if (operator instanceof BinaryExpression){
-				//TODO: check if there is a left child!
-//				if(this.analyticExpressionsTree.leftTree() == null){
-//					this.analyticExpressionsTree = this.analyticExpressionsTree.parent();
-//				}
+				//Because we are a Binary operator, we should already have a right child.
+				//If not, put a 0 here and put the operator to the parent tree.
+				if(this.analyticExpressionsTree.leftTree() == null){
+					this.analyticExpressionsTree.setElement(new Number("0"));
+					if(this.analyticExpressionsTree.parent() == null)
+						(new LinkedRBinaryTree<AnalyticExpression>()).setLeft(this.analyticExpressionsTree);
+					this.analyticExpressionsTree = this.analyticExpressionsTree.parent();
+				}
 				
 				this.analyticExpressionsTree.setElement(operator);
 				if(this.analyticExpressionsTree.rightTree() == null)

@@ -8,6 +8,7 @@ import interpreter.exception.UnknowOperatorException;
 
 import java.io.*;
 
+import derivator.Derivator;
 import linkedRBinaryTree.RBinaryTree;
 
 /**
@@ -21,6 +22,7 @@ public class Controller {
     BufferedReader br;
     BufferedWriter bw;
     Interpreter interpreter;
+    Derivator derivator;
 
     /**
      * @pre --
@@ -107,27 +109,24 @@ public class Controller {
     	String commandLigne;
 		try {
 			while ((commandLigne = br.readLine())!=null){
-				
-				 RBinaryTree<AnalyticExpression> analyticExpressionBinaryTree = interpreter.interprete(commandLigne);
-	//TODO ICI	 derivator.derivate(analyticExpressionBinaryTree);
-//			        if (result != null && !result.isEmpty()) {
-//			            
-//			        	bw.write(result+"\n"); //write the result
-//			        }
+				try{
+					RBinaryTree<AnalyticExpression> analyticExpressionBinaryTree = interpreter.interprete(commandLigne);
+					RBinaryTree<AnalyticExpression> derivatedAnalyticExpressionTree = derivator.derivate(analyticExpressionBinaryTree);
+			        if (derivatedAnalyticExpressionTree != null) {
+			        	bw.write(derivatedAnalyticExpressionTree.toString()+"\n"); //TODO: toString() parcours de l'arbre et constuction d'une expression entierement parenthesees
+			        }
+				} catch (ParentExpectedException e) {
+					bw.write("Expression incorrect, are you missing a bracket in " + commandLigne);
+				} catch (OperatorNotFoundException e) {
+					bw.write("Operator not found in " + commandLigne);
+				} catch (UnknowOperatorException e) {
+					bw.write("Unknow operator in " + commandLigne);
+				}
 			}
 		} catch (IOException e) {
 			System.out.println("Error while I/O operations");
 			System.exit(-5);
-		} catch (ParentExpectedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (OperatorNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (UnknowOperatorException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		} 
     }
 
     /**
