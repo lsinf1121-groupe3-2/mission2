@@ -120,7 +120,14 @@ public class LinkedRBinaryTree<E> implements RBinaryTree<E>{
     }
     
     public RBinaryTree<E> clone(){
-    	return null;//TODO
+    	 
+	    LinkedRBinaryTree linkedRBinaryTree = (LinkedRBinaryTree) super.clone();
+	    
+	    // On clone l'attribut de type Jouet qui n'est pas immuable.
+	    enfant.jouetPrefere = (Jouet) jouetPrefere.clone();
+	    
+	    // on renvoie le clone
+	    return enfant;
     }
 }
 

@@ -3,10 +3,7 @@ package derivator;
 
 import interpreter.command.AnalyticExpression;
 import interpreter.command.unary.UnaryDerivate;
-import interpreter.exception.OperatorNotFoundException;
-import interpreter.exception.ParentExpectedException;
-import interpreter.exception.UnknowOperatorException;
-
+import interpreter.exception.UnexpectedOperatorException;
 import linkedRBinaryTree.LinkedRBinaryTree;
 import linkedRBinaryTree.RBinaryTree;
 
@@ -19,7 +16,7 @@ public class Derivator {
 		this.analyticExpressionsDerivatedTree = new LinkedRBinaryTree<AnalyticExpression>();
 	}
 
-	public RBinaryTree<AnalyticExpression> derivate(RBinaryTree<AnalyticExpression> analyticExpressionBinaryTree) throws NullPointerException {
+	public RBinaryTree<AnalyticExpression> derivate(RBinaryTree<AnalyticExpression> analyticExpressionBinaryTree) throws NullPointerException, UnexpectedOperatorException {
 	
 		if(analyticExpressionBinaryTree == null) 
 			throw new NullPointerException();
