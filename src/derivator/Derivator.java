@@ -1,5 +1,10 @@
 package derivator;
 
+/**
+ * 
+ * @author Jonathan
+ *
+ */
 
 import interpreter.command.AnalyticExpression;
 import interpreter.command.unary.UnaryDerivate;
