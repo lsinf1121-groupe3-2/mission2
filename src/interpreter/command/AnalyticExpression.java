@@ -24,4 +24,8 @@ public abstract class AnalyticExpression {
 	public void setValue(String value) {
 		this.value = value;
 	}
+	
+	public boolean equals(AnalyticExpression a){
+		return value.equals(a.value);
+	}
 }
