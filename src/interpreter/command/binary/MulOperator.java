@@ -28,29 +28,37 @@ public class MulOperator extends BinaryExpression {
 			throw new UnexpectedOperatorException();
 		}
 		//On enregistre f et g
-		RBinaryTree<AnalyticExpression> left = analyticExpressionsTree.leftTree().leftTree();
-		RBinaryTree<AnalyticExpression> right = analyticExpressionsTree.leftTree().rightTree();
+		RBinaryTree<AnalyticExpression> f = analyticExpressionsTree.leftTree().leftTree();
+		RBinaryTree<AnalyticExpression> g = analyticExpressionsTree.leftTree().rightTree();
 		
-		//On modifie le noeud du dessus
+		//On crée Df et Dg
+		RBinaryTree<AnalyticExpression> Df = new LinkedRBinaryTree<AnalyticExpression>();
+		RBinaryTree<AnalyticExpression> Dg = new LinkedRBinaryTree<AnalyticExpression>();
+		Df.setElement(new UnaryDerivate());
+		Dg.setElement(new UnaryDerivate());
+		RBinaryTree<AnalyticExpression> ff = f.clone();
+		RBinaryTree<AnalyticExpression> gg = g.clone();
+		ff.setParent(Df);
+		gg.setParent(Dg);
+		Df.setLeft(ff);
+		Dg.setRight(gg);
+		
+		//On crée les deux sous noeuds multiplicateurs
+		RBinaryTree<AnalyticExpression> rightMul = new LinkedRBinaryTree<AnalyticExpression>(analyticExpressionsTree);
+		RBinaryTree<AnalyticExpression> leftMul = new LinkedRBinaryTree<AnalyticExpression>(analyticExpressionsTree);
+		rightMul.setLeft(Df);
+		rightMul.setRight(g);
+		leftMul.setLeft(f);
+		leftMul.setRight(Dg);
+		
+		Df.setParent(leftMul);
+		g.setParent(leftMul);
+		f.setParent(rightMul);
+		Dg.setParent(rightMul);
+		
 		analyticExpressionsTree.setElement(new AddOperator());
-		analyticExpressionsTree.setLeft(leftD);
-		analyticExpressionsTree.setRight(rightD);
-		
-		
-		RBinaryTree<AnalyticExpression> leftD = new LinkedRBinaryTree<AnalyticExpression>(analyticExpressionsTree);
-		leftD.setElement(new UnaryDerivate());
-		leftD.setLeft(left);
-		left.setParent(leftD);
-		
-		//On construit le sous arbre de droite
-		
-		RBinaryTree<AnalyticExpression> rightD = new LinkedRBinaryTree<AnalyticExpression>(analyticExpressionsTree);
-		rightD.setElement(new UnaryDerivate());
-		rightD.setLeft(right);
-		right.setParent(rightD);
-		
-		
-
+		analyticExpressionsTree.setLeft(leftMul);
+		analyticExpressionsTree.setRight(rightMul);
 	}
 
 }
