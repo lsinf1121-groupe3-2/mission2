@@ -4,9 +4,7 @@ import interpreter.exception.UnexpectedOperatorException;
 import linkedRBinaryTree.RBinaryTree;
 
 /**
- * 
  * @author Tanguy
- *
  */
 public abstract class AnalyticExpression {
 	protected String value;
@@ -25,7 +23,13 @@ public abstract class AnalyticExpression {
 		this.value = value;
 	}
 	
-	public boolean equals(AnalyticExpression a){
-		return value.equals(a.value);
+	public boolean equals(Object a){
+		if(!(a instanceof AnalyticExpression))
+			return false;
+		return this.value.equalsIgnoreCase(((AnalyticExpression)a).getValue());
+	}
+	
+	public String toString(){
+		return this.value;
 	}
 }

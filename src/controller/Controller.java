@@ -13,13 +13,13 @@ import derivator.Derivator;
 import linkedRBinaryTree.RBinaryTree;
 
 /**
- * @author Tanguy
+ * @author Tanguy & Jonathan
  */
 public class Controller {
 
     String commandFile;
     String outputFile;
-    String defaultFile = "resultFile.rmps";
+    String defaultFile = "resultFile.txt";
     BufferedReader br;
     BufferedWriter bw;
     Interpreter interpreter;
@@ -102,13 +102,12 @@ public class Controller {
     }
     
     /**
-     * @throws UnexpectedOperatorException 
      * @pre Les variables bw et br sont initialisées.
      * @post Le fichier d'entrée à été entièrement lu et interprété.
      * Le résultat à été ecrit dans le fichier de sortie.
      * Le programme se termine avec le code d'erreur -5 si une erreur de lecture ou d'écriture survient pendant l'exécution.
      */
-    private void interpreteFile() throws UnexpectedOperatorException{
+    private void interpreteFile(){
     	String commandLigne;
 		try {
 			while ((commandLigne = br.readLine())!=null){
@@ -119,13 +118,15 @@ public class Controller {
 			        	bw.write(derivatedAnalyticExpressionTree.toString()+"\n"); //TODO: toString() parcours de l'arbre et constuction d'une expression entierement parenthesees
 			        }
 				} catch (ParentExpectedException e) {
-					bw.write("Expression incorrect, are you missing a bracket in " + commandLigne);
+					bw.write("Expression incorrect, are you missing a bracket in " + commandLigne+"\n");
 				} catch (OperatorNotFoundException e) {
-					bw.write("Operator not found in " + commandLigne);
+					bw.write("Operator not found in " + commandLigne+"\n");
 				} catch (UnknowOperatorException e) {
-					bw.write("Unknow operator in " + commandLigne);
+					bw.write("Unknow operator in " + commandLigne+"\n");
 				} catch (NullPointerException e) {
-					bw.write("No analytic expression Ninary tree found");
+					bw.write("No analytic expression binary tree found"+"\n");
+				} catch (UnexpectedOperatorException e) {
+					bw.write("Unexpected operator in " + commandLigne+"\n");
 				}
 				
 			}
@@ -136,13 +137,12 @@ public class Controller {
     }
 
     /**
-     * @throws UnexpectedOperatorException 
      * @pre --
      * @post La logique métier permettant de lire le fichier d'entrée contenant les commandes PostScript a été exécutée.
      * Le résultat a été écrit dans le fichier de sortie.
      * Les fichiers ont été fermés correctement.
      */
-    public void start(String[] args) throws UnexpectedOperatorException {
+    public void start(String[] args){
     	this.parseArgs(args);
     	this.initializeReader();
     	this.initializeWriter();
@@ -152,9 +152,8 @@ public class Controller {
 
     /**
      * @param args the command line arguments
-     * @throws UnexpectedOperatorException 
      */
-    public static void main(String[] args) throws UnexpectedOperatorException {
+    public static void main(String[] args) {
         Controller applicationController = new Controller();
         applicationController.start(args);
     }
