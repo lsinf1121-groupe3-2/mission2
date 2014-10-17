@@ -1,6 +1,7 @@
 package interpreter.command.binary;
 
 import interpreter.command.AnalyticExpression;
+import interpreter.command.Number;
 import interpreter.command.unary.UnaryDerivate;
 import interpreter.exception.UnexpectedOperatorException;
 import linkedRBinaryTree.LinkedRBinaryTree;
@@ -32,25 +33,24 @@ public class ExpOperator extends BinaryExpression {
 		RBinaryTree<AnalyticExpression> Df = new LinkedRBinaryTree<AnalyticExpression>();
 		Df.setElement(new UnaryDerivate());
 		RBinaryTree<AnalyticExpression> ff = f.clone();
-		ff.setParent(Df);
 		Df.setLeft(ff);
-		Df.setParent(coeff);
 		
 		//Tous les coefficients avant l'exposant
-		RBinaryTree<AnalyticExpression> coeff = new LinkedRBinaryTree<AnalyticExpression>(analyticExpressionsTree);
+		RBinaryTree<AnalyticExpression> coeff = new LinkedRBinaryTree<AnalyticExpression>();
 		coeff.setElement(new MulOperator());
 		coeff.setLeft(Df);
 		coeff.setRight(a);
 		
-		RBinaryTree<AnalyticExpression> exp = new LinkedRBinaryTree<AnalyticExpression>(analyticExpressionsTree);
+		RBinaryTree<AnalyticExpression> exp = new LinkedRBinaryTree<AnalyticExpression>();
 		exp.setElement(new ExpOperator());
 		exp.setLeft(f);
 		
 		//On crée l'exposant a-1
-		RBinaryTree<AnalyticExpression> aMin1 = new LinkedRBinaryTree<AnalyticExpression>(exp);
+		RBinaryTree<AnalyticExpression> aMin1 = new LinkedRBinaryTree<AnalyticExpression>();
 		RBinaryTree<AnalyticExpression> aa = a.clone();
-		RBinaryTree<AnalyticExpression> one = new LinkedRBinaryTree<AnalyticExpression>(aMin1);
+		RBinaryTree<AnalyticExpression> one = new LinkedRBinaryTree<AnalyticExpression>();
 		one.setElement(new Number("1"));
+		
 		aa.setParent(aMin1);
 		aMin1.setLeft(aa);
 		aMin1.setRight(one);

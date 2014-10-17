@@ -1,6 +1,7 @@
 package interpreter.command.binary;
 
 import interpreter.command.AnalyticExpression;
+import interpreter.command.Number;
 import interpreter.command.unary.UnaryDerivate;
 import interpreter.exception.UnexpectedOperatorException;
 import linkedRBinaryTree.LinkedRBinaryTree;
@@ -17,7 +18,7 @@ public class DivOperator extends BinaryExpression{
 	}
 
 	@Override
-	public void derivate(RBinaryTree<AnalyticExpression> analyticExpressionsTree) {
+	public void derivate(RBinaryTree<AnalyticExpression> analyticExpressionsTree) throws UnexpectedOperatorException {
 		if(!(analyticExpressionsTree.root().element() instanceof UnaryDerivate)){
 			throw new UnexpectedOperatorException();
 		}
@@ -54,7 +55,7 @@ public class DivOperator extends BinaryExpression{
 		Dg.setParent(rightMul);
 		
 		//On crée le numérateur
-		RBinaryTree<AnalyticExpression> Numerator = new LinkedRBinaryTree<AnalyticExpression>(analyticExpressionsTree);
+		RBinaryTree<AnalyticExpression> Numerator = new LinkedRBinaryTree<AnalyticExpression>();
 		rightMul.setParent(Numerator);
 		leftMul.setParent(Numerator);
 		Numerator.setLeft(leftMul);
@@ -62,9 +63,9 @@ public class DivOperator extends BinaryExpression{
 		Numerator.setElement(new SubOperator());
 		
 		//On crée le dénominateur
-		RBinaryTree<AnalyticExpression> Denominator = new LinkedRBinaryTree<AnalyticExpression>(analyticExpressionsTree);
+		RBinaryTree<AnalyticExpression> Denominator = new LinkedRBinaryTree<AnalyticExpression>();
 		RBinaryTree<AnalyticExpression> ggg = g.clone();
-		RBinaryTree<AnalyticExpression> two = new LinkedRBinaryTree<AnalyticExpression>(Denominator);
+		RBinaryTree<AnalyticExpression> two = new LinkedRBinaryTree<AnalyticExpression>();
 		two.setElement(new Number("2"));
 		
 		ggg.setParent(Denominator);

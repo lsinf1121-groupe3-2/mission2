@@ -44,8 +44,8 @@ public class MulOperator extends BinaryExpression {
 		Dg.setRight(gg);
 		
 		//On crée les deux sous noeuds multiplicateurs
-		RBinaryTree<AnalyticExpression> rightMul = new LinkedRBinaryTree<AnalyticExpression>(analyticExpressionsTree);
-		RBinaryTree<AnalyticExpression> leftMul = new LinkedRBinaryTree<AnalyticExpression>(analyticExpressionsTree);
+		RBinaryTree<AnalyticExpression> rightMul = new LinkedRBinaryTree<AnalyticExpression>();
+		RBinaryTree<AnalyticExpression> leftMul = new LinkedRBinaryTree<AnalyticExpression>();
 		rightMul.setLeft(Df);
 		rightMul.setRight(g);
 		leftMul.setLeft(f);
