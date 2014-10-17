@@ -38,23 +38,18 @@ public class MulOperator extends BinaryExpression {
 		Dg.setElement(new UnaryDerivate());
 		RBinaryTree<AnalyticExpression> ff = f.clone();
 		RBinaryTree<AnalyticExpression> gg = g.clone();
-		ff.setParent(Df);
-		gg.setParent(Dg);
 		Df.setLeft(ff);
-		Dg.setRight(gg);
+		Dg.setLeft(gg);
 		
 		//On crée les deux sous noeuds multiplicateurs
 		RBinaryTree<AnalyticExpression> rightMul = new LinkedRBinaryTree<AnalyticExpression>();
 		RBinaryTree<AnalyticExpression> leftMul = new LinkedRBinaryTree<AnalyticExpression>();
+		rightMul.setElement(new MulOperator());
+		leftMul.setElement(new MulOperator());
 		rightMul.setLeft(Df);
 		rightMul.setRight(g);
 		leftMul.setLeft(f);
 		leftMul.setRight(Dg);
-		
-		Df.setParent(leftMul);
-		g.setParent(leftMul);
-		f.setParent(rightMul);
-		Dg.setParent(rightMul);
 		
 		analyticExpressionsTree.setElement(new AddOperator());
 		analyticExpressionsTree.setLeft(leftMul);

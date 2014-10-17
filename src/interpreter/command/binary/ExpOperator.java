@@ -50,8 +50,8 @@ public class ExpOperator extends BinaryExpression {
 		RBinaryTree<AnalyticExpression> aa = a.clone();
 		RBinaryTree<AnalyticExpression> one = new LinkedRBinaryTree<AnalyticExpression>();
 		one.setElement(new Number("1"));
+		aMin1.setElement(new SubOperator());
 		
-		aa.setParent(aMin1);
 		aMin1.setLeft(aa);
 		aMin1.setRight(one);
 		

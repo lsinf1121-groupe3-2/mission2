@@ -36,28 +36,21 @@ public class DivOperator extends BinaryExpression{
 		Dg.setElement(new UnaryDerivate());
 		RBinaryTree<AnalyticExpression> ff = f.clone();
 		RBinaryTree<AnalyticExpression> gg = g.clone();
-		ff.setParent(Df);
-		gg.setParent(Dg);
 		Df.setLeft(ff);
-		Dg.setRight(gg);
+		Dg.setLeft(gg);
 		
 		//On crée les deux sous noeuds multiplicateurs
 		RBinaryTree<AnalyticExpression> rightMul = new LinkedRBinaryTree<AnalyticExpression>();
 		RBinaryTree<AnalyticExpression> leftMul = new LinkedRBinaryTree<AnalyticExpression>();
-		rightMul.setLeft(Df);
-		rightMul.setRight(g);
-		leftMul.setLeft(f);
-		leftMul.setRight(Dg);
-		
-		Df.setParent(leftMul);
-		g.setParent(leftMul);
-		f.setParent(rightMul);
-		Dg.setParent(rightMul);
+		rightMul.setLeft(Dg);
+		rightMul.setRight(f);
+		leftMul.setLeft(Df);
+		leftMul.setRight(g);
+		rightMul.setElement(new MulOperator());
+		leftMul.setElement(new MulOperator());
 		
 		//On crée le numérateur
 		RBinaryTree<AnalyticExpression> Numerator = new LinkedRBinaryTree<AnalyticExpression>();
-		rightMul.setParent(Numerator);
-		leftMul.setParent(Numerator);
 		Numerator.setLeft(leftMul);
 		Numerator.setRight(rightMul);
 		Numerator.setElement(new SubOperator());
@@ -68,9 +61,9 @@ public class DivOperator extends BinaryExpression{
 		RBinaryTree<AnalyticExpression> two = new LinkedRBinaryTree<AnalyticExpression>();
 		two.setElement(new Number("2"));
 		
-		ggg.setParent(Denominator);
 		Denominator.setLeft(ggg);
 		Denominator.setRight(two);
+		Denominator.setElement(new ExpOperator());
 		
 		analyticExpressionsTree.setElement(new DivOperator());
 		analyticExpressionsTree.setLeft(Numerator);
