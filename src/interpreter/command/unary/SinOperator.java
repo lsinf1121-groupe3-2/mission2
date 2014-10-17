@@ -28,21 +28,19 @@ public class SinOperator extends UnaryExpression {
 			throw new UnexpectedOperatorException();
 		}
 
+		// creation de l'arbre de gauche D f
 		RBinaryTree<AnalyticExpression> f = analyticExpressionsTree.leftTree().leftTree();
 		analyticExpressionsTree.setElement(new MulOperator());
 		RBinaryTree<AnalyticExpression> d = new LinkedRBinaryTree();
 		d.setElement(new UnaryDerivate());
 		analyticExpressionsTree.setLeft(d);
+		d.setLeft(f);
 		
+		// creation de l'arbre de droite cos f
 		RBinaryTree<AnalyticExpression> cos = new LinkedRBinaryTree();
 		cos.setElement(new CosOperator());
 		analyticExpressionsTree.setRight(cos);
-		
-		RBinaryTree<AnalyticExpression> LeftF = f.clone();
-		d.setLeft(LeftF);
-		
-		RBinaryTree<AnalyticExpression> RightF = f.clone();
-		cos.setLeft(RightF);		
+		cos.setLeft(f);		
 		
 	}
 
