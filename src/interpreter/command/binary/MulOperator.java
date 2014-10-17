@@ -10,7 +10,6 @@ public class MulOperator extends BinaryExpression {
 
 	public MulOperator(String value) {
 		super(value);
-		// TODO Auto-generated constructor stub
 	}
 	
 	public MulOperator() {

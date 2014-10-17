@@ -10,7 +10,6 @@ public class AddOperator extends BinaryExpression {
 
 	public AddOperator(String value) {
 		super(value);
-		// TODO Auto-generated constructor stub
 	}
 	
 	public AddOperator() {

@@ -13,6 +13,11 @@ public abstract class AnalyticExpression {
 		this.value = value;
 	}
 	
+    /**
+     * @pre la variable analyticExpressionsTree est un arbre binaire dont le noeud du dessus contient un opérateur de déravation et son noeud fils contient un opérateur du type du AnalyticExpression qu'on dérive
+     * @post analyticExpressionsTree est modifié selon la règle de dérivation correspondant à l'opérateur
+     * Toutes les méthodes derivate se font en temps constant
+     */
 	public abstract void derivate(RBinaryTree<AnalyticExpression> analyticExpressionsTree) throws UnexpectedOperatorException;
 	
 	public String getValue() {

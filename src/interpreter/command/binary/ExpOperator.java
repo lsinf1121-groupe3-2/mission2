@@ -11,7 +11,6 @@ public class ExpOperator extends BinaryExpression {
 
 	public ExpOperator(String value) {
 		super(value);
-		// TODO Auto-generated constructor stub
 	}
 	
 	public ExpOperator() {
